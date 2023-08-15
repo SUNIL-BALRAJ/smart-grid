@@ -3,15 +3,15 @@ $(document).ready(function() {
     var basic;
     basic = new GMaps({
         el: '#basic-map',
-        lat: 21.217319,
-        lng: 72.866472,
+        lat: 73.357887654,
+        lng: 80.1438010048,
         scrollwheel: false
     });
     var map;
     map = new GMaps({
         el: '#markers-map',
-        lat: 21.2334329,
-        lng: 72.866472,
+        lat: 13.357887654,
+        lng: 80.1438010048,
         scrollwheel: false
     });
     map.addMarker({

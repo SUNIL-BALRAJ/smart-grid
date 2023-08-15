@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',                        # OAuth new 
     'allauth.socialaccount.providers.github',       # OAuth new 
     'allauth.socialaccount.providers.twitter',      # OAuth new  
-    "sslserver"    
+    "sslserver",
+    "channels"   
 ]
 
 MIDDLEWARE = [
@@ -57,12 +58,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'core.urls'
 LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
 TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
+ASGI_APPLICATION = 'apps.asgi.application'
 
 TEMPLATES = [
     {
@@ -76,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.context_processors.cfg_assets_root',
+                'django.template.context_processors.csrf',
             ],
         },
     },
@@ -127,6 +131,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+SSLPORT = 8443
 
 TIME_ZONE = 'UTC'
 

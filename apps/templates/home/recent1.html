@@ -1,0 +1,501 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <div class="page-header">
+                    <div class="page-block">
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [ breadcrumb ] end -->
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Recent Summary</h5>
+                                    </div>
+                                    <div class="card-body"><!DOCTYPE html>
+                                      <!DOCTYPE html>
+                                      <html>
+                                      <head>
+                                        <title>Transaction History</title>
+                                        <style>
+                                          body {
+                                            font-family: Arial, sans-serif;
+                                            background-color: #f5f5f5;
+                                          }
+                                      
+                                          h1 {
+                                            color: #333;
+                                            text-align: center;
+                                          }
+                                      
+                                          #wallet-info {
+                                            margin-bottom: 20px;
+                                            text-align: center;
+                                          }
+                                      
+                                          
+                                      
+                                          #wallet-address {
+                                            color: #333;
+                                            font-weight: bold;
+                                          }
+                                      
+                                          #transaction-history {
+                                            background-color: #fff;
+                                            padding: 20px;
+                                            border-radius: 4px;
+                                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                          }
+                                      
+                                          h2 {
+                                            color: #333;
+                                            margin-top: 0;
+                                            margin-bottom: 10px;
+                                          }
+                                      
+                                          table {
+                                            border-collapse: collapse;
+                                            width: 100%;
+                                          }
+                                      
+                                          th, td {
+                                            padding: 8px;
+                                            text-align: left;
+                                            border-bottom: 1px solid #ddd;
+                                          }
+                                      
+                                          th {
+                                            background-color: #f2f2f2;
+                                            color: #333;
+                                          }
+                                        </style>
+                                      </head>
+                                      <body>
+                                      
+                                        <div id="wallet-info">
+                                          <button id="connect-wallet-button" class="btn btn-primary">Connect Wallet</button>
+                                          <span id="wallet-address"></span>
+                                        </div>
+                                      
+                                        <div id="transaction-history">
+                                          <table id="transaction-table">
+                                            <thead>
+                                              <tr>
+                                                <th>Transaction ID</th>
+                                                <th>Buyer</th>
+                                                <th>Energy Amount</th>
+                                                <th>Price</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody id="transaction-body"></tbody>
+                                          </table>
+                                        </div>
+                                      
+                                        <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
+                                        <script>
+                                          let signer;
+                                          let contract;
+                                          let walletAddress;
+                                      
+                                          async function connectWallet() {
+                                            if (window.ethereum) {
+                                              try {
+                                                await window.ethereum.enable();
+                                                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                                                signer = provider.getSigner();
+                                                walletAddress = await signer.getAddress();
+                                                document.getElementById('wallet-address').textContent = walletAddress;
+                                      
+                                                // Replace with your contract address and ABI
+                                                const contractAddress = '0xc33cD2f86D802cdA9a473EfADc253C65AC56ff29';
+                                                const contractABI = [
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tokenAddress",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "offerId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "producer",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "buyer",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "energyAmount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			}
+		],
+		"name": "EnergyTransferred",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "offerId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "producer",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "energyAmount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "isAvailable",
+				"type": "bool"
+			}
+		],
+		"name": "OfferCreated",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_offerId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_unitCount",
+				"type": "uint256"
+			}
+		],
+		"name": "buyEnergy",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_energyAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_price",
+				"type": "uint256"
+			}
+		],
+		"name": "createSellingOffer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "energyBalances",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "seller",
+				"type": "address"
+			}
+		],
+		"name": "getSellerTransactionCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "seller",
+				"type": "address"
+			}
+		],
+		"name": "getSellerTransactions",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "energyAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct EnergyTradingContract.Transaction[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "getTokenBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "offerCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "sellerTransactions",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "buyer",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "energyAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "sellingOffers",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "producer",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "energyAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "isAvailable",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tokenAddress",
+				"type": "address"
+			}
+		],
+		"name": "setTokenAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tokenAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+                                                contract = new ethers.Contract(contractAddress, contractABI, signer);
+                                      
+                                                loadTransactionHistory();
+                                              } catch (error) {
+                                                console.error('Failed to connect wallet:', error);
+                                              }
+                                            } else {
+                                              alert('Please install MetaMask to connect your wallet.');
+                                            }
+                                          }
+                                      
+                                          async function loadTransactionHistory() {
+                                            const transactionTable = document.getElementById('transaction-body');
+                                            transactionTable.innerHTML = '';
+                                      
+                                            const sellerTransactions = await contract.getSellerTransactions(walletAddress);
+                                            sellerTransactions.forEach((transaction, index) => {
+                                              const row = transactionTable.insertRow();
+                                              const idCell = row.insertCell();
+                                              const buyerCell = row.insertCell();
+                                              const energyAmountCell = row.insertCell();
+                                              const priceCell = row.insertCell();
+                                      
+                                              idCell.textContent = index + 1;
+                                              buyerCell.textContent = transaction.buyer;
+                                              energyAmountCell.textContent = transaction.energyAmount;
+                                              priceCell.textContent = transaction.price;
+                                            });
+                                          }
+                                      
+                                          document.getElementById('connect-wallet-button').addEventListener('click', connectWallet);
+                                        </script>
+                                      </body>
+                                      </html>
+                                      
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+

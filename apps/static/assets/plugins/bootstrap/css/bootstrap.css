@@ -4801,14 +4801,14 @@ input[type="button"].btn-block {
 }
 
 .badge-secondary {
-  color: #fff;
-  background-color: #6c757d;
+  color: #ccd734;
+  background-color: #ccd734;
 }
 
 .badge-secondary[href]:hover, .badge-secondary[href]:focus {
-  color: #fff;
+  color: #ccd734;
   text-decoration: none;
-  background-color: #545b62;
+  background-color: #ccd734;
 }
 
 .badge-success {
@@ -6600,7 +6600,7 @@ button.bg-dark:focus {
   justify-content: space-around !important;
 }
 
-.align-items-start {
+.-start {
   -ms-flex-align: start !important;
   align-items: flex-start !important;
 }

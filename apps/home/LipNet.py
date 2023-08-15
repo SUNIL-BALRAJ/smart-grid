@@ -189,7 +189,7 @@ def lipOut(p):
     # print('~'*100, 'PREDICTIONS')
     # [tf.strings.reduce_join([num_to_char(word) for word in sentence]) for sentence in decoded]
 
-    sample = load_data(tf.convert_to_tensor('.\\data\\s1\\'+'a'+'.mpg'))
+    sample = load_data(tf.convert_to_tensor('.\\data\\s1\\'+p+'.mpg'))
 
     # print('~'*100, 'REAL TEXT')
     # [tf.strings.reduce_join([num_to_char(word) for word in sentence]) for sentence in [sample[1]]]

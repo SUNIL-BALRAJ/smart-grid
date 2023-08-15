@@ -5,34 +5,34 @@ $(document).ready(function() {
     Morris.Bar({
         element: 'morris-bar-chart',
         data: [{
-                y: '2008',
-                a: 50,
-                b: 40,
-                c: 35,
+            y: 'Andhra Pradesh',
+            a: 1093,
+            b: 2738,
+            c: 17089,
             },
             {
-                y: '2009',
-                a: 75,
-                b: 65,
-                c: 60,
+                y: 'Kerala',
+                a: 1117,
+                b: 4170,
+                c: 10139,
             },
             {
-                y: '2010',
-                a: 50,
-                b: 40,
-                c: 55,
+                y: 'Karataka',
+                a: 2213,
+                b: 6137,
+                c: 12680,
             },
             {
-                y: '2011',
-                a: 75,
-                b: 65,
-                c: 85,
+                y: 'Maharastra',
+                a: 4398,
+                b: 14690,
+                c: 31954,
             },
             {
-                y: '2012',
-                a: 100,
-                b: 90,
-                c: 40,
+                y: 'Tamil Nadu',
+                a: 1763,
+                b: 4929,
+                c: 6630,
             }
         ],
         xkey: 'y',
@@ -41,7 +41,7 @@ $(document).ready(function() {
         resize: true,
         responsive:true,
         ykeys: ['a', 'b', 'c'],
-        labels: ['Bar 1', 'Bar 2', 'Bar 3'],
+        labels: ['Men', 'Children', 'Women'],
         barColors: ["0-#1de9b6-#1dc4e9", "0-#899FD4-#A389D4", "#04a9f5"]
     });
     // [ bar-simple ] chart end
@@ -49,46 +49,42 @@ $(document).ready(function() {
     // [ bar-stacked ] chart start
     Morris.Bar({
         element: 'morris-bar-stacked-chart',
-        data: [{
-                y: '2008',
-                a: 50,
-                b: 40,
-                c: 35,
+        data: [
+            {
+            y: 'Andhra Pradesh',
+            b: 19271,
+            a: 17089,
             },
             {
-                y: '2009',
-                a: 75,
-                b: 65,
-                c: 60,
+                y: 'Kerala',
+                b: 11269,
+                a: 10139,
             },
             {
-                y: '2010',
-                a: 50,
-                b: 40,
-                c: 55,
+                y: 'Karataka',
+                b: 13948,
+                a: 12680,
             },
             {
-                y: '2011',
-                a: 75,
-                b: 65,
-                c: 85,
+                y: 'Maharastra',
+                b: 35149,
+                a: 31954,
             },
             {
-                y: '2012',
-                a: 100,
-                b: 90,
-                c: 40,
+                y: 'Tamil Nadu',
+                b: 7293,
+                a: 6630,
             }
         ],
         xkey: 'y',
         stacked: true,
         barSizeRatio: 0.50,
-        barGap: 3,
+        barGap: 2,
         resize: true,
         responsive:true,
-        ykeys: ['a', 'b', 'c'],
-        labels: ['Bar 1', 'Bar 2', 'Bar 3'],
-        barColors: ["0-#1de9b6-#1dc4e9", "0-#899FD4-#A389D4", "#04a9f5"]
+        ykeys: ['a', 'b'],
+        labels: ['Before', 'After'],
+        barColors: ["0-#1de9b6-#1dc4e9", "0-#899FD4-#A389D4"]
     });
     // [ bar-stacked ] chart end
 
